@@ -1,0 +1,11 @@
+# .htaccess in the /admin directory
+
+Options -MultiViews
+RewriteEngine On
+
+# Only apply the following rules if the requested file or directory doesn't exist
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite requests to the /admin app's index.html
+RewriteRule ^ /install/index.html [QSA,L]
