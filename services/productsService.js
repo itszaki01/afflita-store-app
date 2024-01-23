@@ -9,7 +9,7 @@ const handlersFactory_1 = require("../utils/handlersFactory");
 const ProductModel_1 = require("../models/ProductModel");
 const apiError_1 = require("../utils/apiError");
 exports.getAllProducts = (0, express_async_handler_1.default)(async (req, res) => {
-    const products = await (0, handlersFactory_1.findAll)(ProductModel_1.Product);
+    const products = await ProductModel_1.Product.find({}).sort('-createdAt');
     let data;
     if (process.env.NEW_BASE_URL) {
         const oldBaseUrlRegex = new RegExp(process.env.ORIGINAL_BASE_URL, 'g');

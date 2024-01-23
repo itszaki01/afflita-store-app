@@ -45,7 +45,7 @@ exports.signUp = (0, express_async_handler_1.default)(async (req, res, next) => 
         return next(new apiError_1.ApiError("السكربت مثبت بالفعل", 403));
     }
     const hasedPassword = (0, js_sha256_1.sha256)(req.body.password);
-    const newUser = await UserModel_1.User.create({ email: req.body.email, password: hasedPassword });
+    const newUser = await UserModel_1.User.create({ email: req.body.email, password: hasedPassword, role: 'admin' });
     const payload = {
         userId: newUser._id,
     };
