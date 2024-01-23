@@ -44,7 +44,6 @@ const filesRoute_1 = require("./routes/filesRoute");
 const authRoute_1 = require("./routes/authRoute");
 const viewsRoute_1 = require("./routes/viewsRoute");
 const storePagesRoute_1 = require("./routes/storePagesRoute");
-const express_rate_limit_1 = require("express-rate-limit");
 const compression_1 = __importDefault(require("compression"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -53,15 +52,9 @@ app.use(express_1.default.json());
 app.use(express_useragent_1.default.express());
 app.use(requestIp.mw());
 app.use((0, compression_1.default)());
-const limiter = (0, express_rate_limit_1.rateLimit)({
-    windowMs: 10 * 60 * 1000,
-    limit: 600,
-    message: "limited requests",
-});
-app.use(limiter);
 app.use((0, cors_1.default)());
 app.options("*", (0, cors_1.default)());
-app.use("/", express_1.default.static(path_1.default.join(__dirname, "public")));
+app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use("/storeSettings", storeSettingsRoute_1.storeSettingsRouter);
 app.use("/storePages", storePagesRoute_1.storePagesRouter);
 app.use("/categories", categoriesRoute_1.categoriesRouter);
