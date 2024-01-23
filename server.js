@@ -46,6 +46,7 @@ const viewsRoute_1 = require("./routes/viewsRoute");
 const storePagesRoute_1 = require("./routes/storePagesRoute");
 const express_rate_limit_1 = require("express-rate-limit");
 const compression_1 = __importDefault(require("compression"));
+const fs_1 = __importDefault(require("fs"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 (0, connectDB_1.connectDb)();
@@ -55,7 +56,7 @@ app.use(requestIp.mw());
 app.use((0, compression_1.default)());
 const limiter = (0, express_rate_limit_1.rateLimit)({
     windowMs: 10 * 60 * 1000,
-    limit: 200,
+    limit: 600,
     message: "limited requests",
 });
 app.use(limiter);
@@ -71,6 +72,15 @@ app.use("/auth", authRoute_1.authRouter);
 app.use("/locations", locationsRoute_1.locationsRouter);
 app.use("/conv-api", conversioinApiRoutes_1.conversionApiRoutes);
 app.use("/", viewsRoute_1.viewsRouter);
+const folderName = 'public/uploads';
+try {
+    if (!fs_1.default.existsSync(folderName)) {
+        fs_1.default.mkdirSync(folderName);
+    }
+}
+catch (err) {
+    console.error(err);
+}
 app.all("*", route404Hanlder_1.route404Hanlder);
 app.use(expressErrorHandler_1.expressErrorHandler);
 const PORT = process.env.PORT || 3000;
