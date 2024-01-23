@@ -10,7 +10,6 @@ const authService_1 = require("../services/authService");
 const router = express_1.default.Router();
 router.route('/createBulk').post(authService_1.auth, locationsService_1.createBulkLocations);
 router.route('/removeAll').delete(authService_1.auth, locationsService_1.removeAllLocations);
-router.route('/test').post(authService_1.auth, (req, res) => { res.json({ succes: 'test ok' }); });
 router.route('/').get(locationsService_1.getAllLocations).post(authService_1.auth, locationsService_1.createLocation);
 router.route('/:locationId').get(locationsService_1.getOneLocation).patch(authService_1.auth, locationsService_1.updateLocation).delete(authService_1.auth, locationsService_1.removeLocation);
 exports.locationsRouter = router;
