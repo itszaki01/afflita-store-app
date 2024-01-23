@@ -44,6 +44,7 @@ const authRoute_1 = require("./routes/authRoute");
 const viewsRoute_1 = require("./routes/viewsRoute");
 const storePagesRoute_1 = require("./routes/storePagesRoute");
 const compression_1 = __importDefault(require("compression"));
+const fs_1 = __importDefault(require("fs"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 (0, connectDB_1.connectDb)();
@@ -64,6 +65,15 @@ app.use("/conv-api", conversioinApiRoutes_1.conversionApiRoutes);
 app.use("/", viewsRoute_1.viewsRouter);
 app.all("*", route404Hanlder_1.route404Hanlder);
 app.use(expressErrorHandler_1.expressErrorHandler);
+fs_1.default.access('public/uploads', (err) => {
+    if (err) {
+        fs_1.default.mkdir('public/uploads', (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+    }
+});
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
     console.log("server Listen on port ", PORT);
