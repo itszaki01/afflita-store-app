@@ -7,6 +7,8 @@ exports.updateStoreSettings = exports.createStoreSettings = exports.getStoreSett
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const StoreSettingsModel_1 = require("../models/StoreSettingsModel");
 const apiError_1 = require("../utils/apiError");
+const StorePageModel_1 = require("../models/StorePageModel");
+const DefualtStorePages_1 = require("../constants/DefualtStorePages");
 exports.getStoreSettings = (0, express_async_handler_1.default)(async (req, res, next) => {
     const storeSettings = await StoreSettingsModel_1.StoreSettings.find({});
     if (storeSettings.length === 0) {
@@ -30,6 +32,7 @@ exports.createStoreSettings = (0, express_async_handler_1.default)(async (req, r
     if (storeSettings.length > 0) {
         return next(new apiError_1.ApiError("القالب مثبت بالفعل", 403));
     }
+    await StorePageModel_1.StorePage.create(DefualtStorePages_1.defualtStorePages);
     const newStoreSettings = await StoreSettingsModel_1.StoreSettings.create(req.body);
     res.json({
         data: newStoreSettings,
