@@ -27,7 +27,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const express_useragent_1 = __importDefault(require("express-useragent"));
 const requestIp = __importStar(require("request-ip"));
 const cors_1 = __importDefault(require("cors"));
 const conversioinApiRoutes_1 = require("./routes/conversioinApiRoutes");
@@ -49,7 +48,6 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 (0, connectDB_1.connectDb)();
 app.use(express_1.default.json());
-app.use(express_useragent_1.default.express());
 app.use(requestIp.mw());
 app.use((0, compression_1.default)());
 app.use((0, cors_1.default)());
