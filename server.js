@@ -62,7 +62,6 @@ app.use("/products", productsRoute_1.productsRouter);
 app.use("/auth", authRoute_1.authRouter);
 app.use("/locations", locationsRoute_1.locationsRouter);
 app.use("/conv-api", conversioinApiRoutes_1.conversionApiRoutes);
-app.post('/test', (req, res) => { res.json({ succes: 'test ok' }); });
 app.use("/", viewsRoute_1.viewsRouter);
 app.all("*", route404Hanlder_1.route404Hanlder);
 app.use(expressErrorHandler_1.expressErrorHandler);

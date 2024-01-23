@@ -21,8 +21,9 @@ const storage = multer_1.default.diskStorage({
         }
         else {
             const _req = req;
+            const fileExtension = file.originalname.split('.').pop();
             const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-            const fileName = file.fieldname + "-" + uniqueSuffix + "." + file.mimetype.split("/")[1];
+            const fileName = file.fieldname + "-" + uniqueSuffix + "." + fileExtension;
             _req.fileName = fileName;
             cb(null, fileName);
         }
