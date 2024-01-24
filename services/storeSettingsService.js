@@ -19,7 +19,7 @@ exports.getStoreSettings = (0, express_async_handler_1.default)(async (req, res,
     const replacedJsonString = jsonString.replace(regex, `"${process.env.ORIGINAL_BASE_URL}$2"`);
     const replacedJson = JSON.parse(replacedJsonString);
     res.json({
-        data: replacedJson,
+        data: replacedJson[0],
     });
 });
 exports.createStoreSettings = (0, express_async_handler_1.default)(async (req, res, next) => {
