@@ -9,32 +9,22 @@ const handlersFactory_1 = require("../utils/handlersFactory");
 const CategoryModel_1 = require("../models/CategoryModel");
 exports.getAllCategories = (0, express_async_handler_1.default)(async (req, res) => {
     const categories = await (0, handlersFactory_1.findAll)(CategoryModel_1.Category);
-    let data;
-    if (process.env.NEW_BASE_URL) {
-        const oldBaseUrlRegex = new RegExp(process.env.ORIGINAL_BASE_URL, 'g');
-        data = JSON.stringify(categories).replace(oldBaseUrlRegex, process.env.NEW_BASE_URL);
-        data = JSON.parse(data);
-    }
-    else {
-        data = categories;
-    }
+    const regex = /"(\w+:\/\/)[^\/]+(\/uploads\/image-[^\s"]+)"/g;
+    const jsonString = JSON.stringify(categories);
+    const replacedJsonString = jsonString.replace(regex, `"${process.env.ORIGINAL_BASE_URL}$2"`);
+    const replacedJson = JSON.parse(replacedJsonString);
     res.json({
-        data
+        data: replacedJson
     });
 });
 exports.getOneCategory = (0, express_async_handler_1.default)(async (req, res) => {
     const category = await (0, handlersFactory_1.findOne)(CategoryModel_1.Category, req.params.categoryId);
-    let data;
-    if (process.env.NEW_BASE_URL) {
-        const oldBaseUrlRegex = new RegExp(process.env.ORIGINAL_BASE_URL, 'g');
-        data = JSON.stringify(category).replace(oldBaseUrlRegex, process.env.NEW_BASE_URL);
-        data = JSON.parse(data);
-    }
-    else {
-        data = category;
-    }
+    const regex = /"(\w+:\/\/)[^\/]+(\/uploads\/image-[^\s"]+)"/g;
+    const jsonString = JSON.stringify(category);
+    const replacedJsonString = jsonString.replace(regex, `"${process.env.ORIGINAL_BASE_URL}$2"`);
+    const replacedJson = JSON.parse(replacedJsonString);
     res.json({
-        data
+        data: replacedJson
     });
 });
 exports.createCategory = (0, express_async_handler_1.default)(async (req, res) => {

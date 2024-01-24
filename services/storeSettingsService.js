@@ -14,17 +14,12 @@ exports.getStoreSettings = (0, express_async_handler_1.default)(async (req, res,
     if (storeSettings.length === 0) {
         return next(new apiError_1.ApiError("الرجاء تثبيت القالب", 404));
     }
-    let data;
-    if (process.env.NEW_BASE_URL) {
-        const oldBaseUrlRegex = new RegExp(process.env.ORIGINAL_BASE_URL, "g");
-        data = JSON.stringify(storeSettings[0]).replace(oldBaseUrlRegex, process.env.NEW_BASE_URL);
-        data = JSON.parse(data);
-    }
-    else {
-        data = storeSettings[0];
-    }
+    const regex = /"(\w+:\/\/)[^\/]+(\/uploads\/image-[^\s"]+)"/g;
+    const jsonString = JSON.stringify(storeSettings);
+    const replacedJsonString = jsonString.replace(regex, `"${process.env.ORIGINAL_BASE_URL}$2"`);
+    const replacedJson = JSON.parse(replacedJsonString);
     res.json({
-        data,
+        data: replacedJson,
     });
 });
 exports.createStoreSettings = (0, express_async_handler_1.default)(async (req, res, next) => {
