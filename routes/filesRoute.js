@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.filesRouter = void 0;
 const express_1 = __importDefault(require("express"));
-const expressCheckAccess_1 = require("../middlewares/expressCheckAccess");
 const filesService_1 = require("../services/filesService");
 const multer_1 = __importDefault(require("multer"));
 const apiError_1 = require("../utils/apiError");
@@ -30,6 +29,6 @@ const storage = multer_1.default.diskStorage({
     },
 });
 const upload = (0, multer_1.default)({ storage, dest: "public/uploads" });
-router.route("/").post(expressCheckAccess_1.expressCheckAccess, authService_1.auth, upload.single("image"), filesService_1.uploadFile);
-router.route("/:fileId").delete(expressCheckAccess_1.expressCheckAccess, authService_1.auth, filesService_1.deleteFile);
+router.route("/").post(authService_1.auth, upload.single("image"), filesService_1.uploadFile);
+router.route("/:fileId").delete(authService_1.auth, filesService_1.deleteFile);
 exports.filesRouter = router;
