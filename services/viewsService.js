@@ -15,7 +15,7 @@ exports.homeView = (0, express_async_handler_1.default)(async (req, res) => {
         <head>
             <meta charset="UTF-8" />
             <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no" />
-            ${sotreSettings[0].headCode}
+            ${sotreSettings[0].headCode ? sotreSettings[0].headCode : ""}
             <script>
                 //Part1
                 !(function (w, d, t) {
