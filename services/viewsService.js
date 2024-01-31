@@ -16,7 +16,7 @@ exports.homeView = (0, express_async_handler_1.default)(async (req, res) => {
             res.send(err.message);
             return;
         }
-        const newData = data.replace("<!--To-Replace-->", sotreSettings[0].headCode);
+        const newData = data.replace(/<!--To-Replace-->/g, sotreSettings[0].headCode);
         res.send(newData);
     });
 });
