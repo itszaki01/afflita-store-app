@@ -10,12 +10,16 @@ const StoreSettingsModel_1 = require("../models/StoreSettingsModel");
 exports.homeView = (0, express_async_handler_1.default)(async (req, res) => {
     const sotreSettings = await StoreSettingsModel_1.StoreSettings.find({});
     res.setHeader("Content-Type", "text/html; charset=UTF-8");
+    let header = '';
+    if (sotreSettings && sotreSettings.length > 0 && sotreSettings[0].headCode) {
+        header = sotreSettings[0].headCode;
+    }
     const html = `<!DOCTYPE html>
     <html lang="en">
         <head>
             <meta charset="UTF-8" />
             <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no" />
-            ${sotreSettings[0].headCode ? sotreSettings[0].headCode : ""}
+            ${header}
             <script>
                 //Part1
                 !(function (w, d, t) {
