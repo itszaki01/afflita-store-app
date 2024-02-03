@@ -54,6 +54,11 @@ const storeSettingsSchema = new mongoose_1.default.Schema({
     id: { type: mongoose_1.default.Types.ObjectId, default: function () {
             return this._id;
         } },
-    headCode: String
+    headCode: String,
+    secondryLogo: {
+        square: Boolean,
+        logoLink: String
+    },
+    allowCities: Boolean
 }, { timestamps: true });
 exports.StoreSettings = mongoose_1.default.model("StoreSettings", storeSettingsSchema);

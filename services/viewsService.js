@@ -10,7 +10,7 @@ const StoreSettingsModel_1 = require("../models/StoreSettingsModel");
 exports.homeView = (0, express_async_handler_1.default)(async (req, res) => {
     const sotreSettings = await StoreSettingsModel_1.StoreSettings.find({});
     res.setHeader("Content-Type", "text/html; charset=UTF-8");
-    let header = '';
+    let header = "";
     if (sotreSettings && sotreSettings.length > 0 && sotreSettings[0].headCode) {
         header = sotreSettings[0].headCode;
     }
@@ -86,8 +86,8 @@ exports.homeView = (0, express_async_handler_1.default)(async (req, res) => {
                     s.parentNode.insertBefore(t, s);
                 })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
             </script>
-          <script type="module" crossorigin src="/assets/index-FGmmmVnB.js"></script>
-          <link rel="stylesheet" crossorigin href="/assets/index-IZka7ouJ.css">
+            <script type="module" crossorigin src="/assets/index-VA2t4qa9.js"></script>
+      <link rel="stylesheet" crossorigin href="/assets/index-IZka7ouJ.css">
         </head>
         <body>
             <div id="root"></div>
