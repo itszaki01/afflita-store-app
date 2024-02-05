@@ -29,22 +29,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const requestIp = __importStar(require("request-ip"));
 const cors_1 = __importDefault(require("cors"));
-const conversioinApiRoutes_1 = require("./routes/conversioinApiRoutes");
 const dotenv_1 = __importDefault(require("dotenv"));
-const connectDB_1 = require("./db/connectDB");
+const connectDB_1 = require("./app/db/connectDB");
 const path_1 = __importDefault(require("path"));
-const storeSettingsRoute_1 = require("./routes/storeSettingsRoute");
-const route404Hanlder_1 = require("./middlewares/route404Hanlder");
-const expressErrorHandler_1 = require("./middlewares/expressErrorHandler");
-const categoriesRoute_1 = require("./routes/categoriesRoute");
-const locationsRoute_1 = require("./routes/locationsRoute");
-const productsRoute_1 = require("./routes/productsRoute");
-const filesRoute_1 = require("./routes/filesRoute");
-const authRoute_1 = require("./routes/authRoute");
-const viewsRoute_1 = require("./routes/viewsRoute");
-const storePagesRoute_1 = require("./routes/storePagesRoute");
+const route404Hanlder_1 = require("./app/middlewares/route404Hanlder");
+const expressErrorHandler_1 = require("./app/middlewares/expressErrorHandler");
 const compression_1 = __importDefault(require("compression"));
 const fs_1 = __importDefault(require("fs"));
+const routes_1 = require("./app/routes");
+const child_process_1 = require("child_process");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 (0, connectDB_1.connectDb)();
@@ -53,21 +46,34 @@ app.use(requestIp.mw());
 app.use((0, compression_1.default)());
 app.use((0, cors_1.default)());
 app.options("*", (0, cors_1.default)());
-app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
-app.use("/storeSettings", storeSettingsRoute_1.storeSettingsRouter);
-app.use("/storePages", storePagesRoute_1.storePagesRouter);
-app.use("/categories", categoriesRoute_1.categoriesRouter);
-app.use("/file", filesRoute_1.filesRouter);
-app.use("/products", productsRoute_1.productsRouter);
-app.use("/auth", authRoute_1.authRouter);
-app.use("/locations", locationsRoute_1.locationsRouter);
-app.use("/conv-api", conversioinApiRoutes_1.conversionApiRoutes);
-app.use("/", viewsRoute_1.viewsRouter);
+app.use(express_1.default.static(path_1.default.join(__dirname, "app/public")));
+(0, routes_1.mountedRoutes)(app);
 app.all("*", route404Hanlder_1.route404Hanlder);
 app.use(expressErrorHandler_1.expressErrorHandler);
-fs_1.default.access('public/uploads', (err) => {
+setInterval(() => {
+    if (process.env.NODE_ENV?.startsWith("DEV"))
+        return;
+    try {
+        const output = (0, child_process_1.execSync)("git pull", { encoding: "utf-8" });
+        if (output.toLocaleLowerCase().includes("updating")) {
+            console.log("updating");
+            process.exit(1);
+        }
+        else if (output.toLocaleLowerCase().includes("already")) {
+            console.log("up-to-date");
+        }
+        else {
+            process.exit(1);
+        }
+    }
+    catch (error) {
+        const _erorr = error;
+        console.log(_erorr.message);
+    }
+}, 10000 * 6 * 5);
+fs_1.default.access("app/public/uploads", (err) => {
     if (err) {
-        fs_1.default.mkdir('public/uploads', (err) => {
+        fs_1.default.mkdir("app/public/uploads", (err) => {
             if (err) {
                 console.log(err);
             }
