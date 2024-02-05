@@ -49,7 +49,7 @@ const productsSchema = new mongoose_1.default.Schema({
     ],
     rating: { type: Number },
     oldPrice: { type: Number },
-    slug: { type: String, unique: true },
+    slug: { type: String, unique: true, trim: true },
     offers: [
         {
             offerName: { type: String },

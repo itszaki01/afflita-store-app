@@ -9,6 +9,7 @@ const StoreSettingsModel_1 = require("../models/StoreSettingsModel");
 const apiError_1 = require("../utils/apiError");
 const StorePageModel_1 = require("../models/StorePageModel");
 const DefualtStorePages_1 = require("../constants/DefualtStorePages");
+const axios_1 = __importDefault(require("axios"));
 exports.getStoreSettings = (0, express_async_handler_1.default)(async (req, res, next) => {
     const storeSettings = await StoreSettingsModel_1.StoreSettings.find({});
     if (storeSettings.length === 0) {
@@ -23,15 +24,35 @@ exports.getStoreSettings = (0, express_async_handler_1.default)(async (req, res,
     });
 });
 exports.createStoreSettings = (0, express_async_handler_1.default)(async (req, res, next) => {
+    const token = req.headers["afflita_access_token"];
     const storeSettings = await StoreSettingsModel_1.StoreSettings.find({});
     if (storeSettings.length > 0) {
         return next(new apiError_1.ApiError("القالب مثبت بالفعل", 403));
     }
     await StorePageModel_1.StorePage.create(DefualtStorePages_1.defualtStorePages);
-    const newStoreSettings = await StoreSettingsModel_1.StoreSettings.create(req.body);
-    res.json({
-        data: newStoreSettings,
-    });
+    let subScreptionData;
+    try {
+        subScreptionData = await axios_1.default.get(`https://apiv1.afflitaservices.xyz/subScreptions/${token}`);
+    }
+    catch (error) {
+        const _error1 = error;
+        try {
+            subScreptionData = await axios_1.default.get(`https://apiv2.afflitaservices.xyz/subScreptions/${token}`);
+            return next();
+        }
+        catch (error) {
+            const _error2 = error;
+            return next(new apiError_1.ApiError(`Api1Error:${_error1.message} && Api2Error: ${_error2.message}`, 505));
+        }
+    }
+    console.log(subScreptionData);
+    if (subScreptionData.data.data.isAgency) {
+        await StoreSettingsModel_1.StoreSettings.create({ ...req.body, isAgency: subScreptionData.data.data.isAgency, agencyInfo: subScreptionData.data.data.agency });
+    }
+    else {
+        await StoreSettingsModel_1.StoreSettings.create(req.body);
+    }
+    res.json({ status: "succress" });
 });
 exports.updateStoreSettings = (0, express_async_handler_1.default)(async (req, res, next) => {
     const storeSettings = await StoreSettingsModel_1.StoreSettings.find({});
