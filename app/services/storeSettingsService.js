@@ -45,14 +45,13 @@ exports.createStoreSettings = (0, express_async_handler_1.default)(async (req, r
             return next(new apiError_1.ApiError(`Api1Error:${_error1.message} && Api2Error: ${_error2.message}`, 505));
         }
     }
-    console.log(subScreptionData);
     if (subScreptionData.data.data.isAgency) {
-        await StoreSettingsModel_1.StoreSettings.create({ ...req.body, isAgency: subScreptionData.data.data.isAgency, agencyInfo: subScreptionData.data.data.agency });
+        await StoreSettingsModel_1.StoreSettings.create({ ...req.body, isAgency: subScreptionData.data.data.isAgency, agnecyInfo: subScreptionData.data.data.agency });
     }
     else {
         await StoreSettingsModel_1.StoreSettings.create(req.body);
     }
-    res.json({ status: "succress" });
+    res.json({ status: "success" });
 });
 exports.updateStoreSettings = (0, express_async_handler_1.default)(async (req, res, next) => {
     const storeSettings = await StoreSettingsModel_1.StoreSettings.find({});

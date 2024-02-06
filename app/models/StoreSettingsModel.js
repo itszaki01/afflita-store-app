@@ -90,5 +90,11 @@ const storeSettingsSchema = new mongoose_1.default.Schema({
         },
     },
     allowCities: Boolean,
+    isDemo: Boolean,
+    demoInfo: {
+        email: String,
+        password: String,
+        subScriptionKey: String,
+    },
 }, { timestamps: true });
 exports.StoreSettings = mongoose_1.default.model("StoreSettings", storeSettingsSchema);

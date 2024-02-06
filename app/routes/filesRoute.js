@@ -9,6 +9,7 @@ const filesService_1 = require("../services/filesService");
 const multer_1 = __importDefault(require("multer"));
 const apiError_1 = require("../utils/apiError");
 const authService_1 = require("../services/authService");
+const checkDemo_1 = require("../middlewares/checkDemo");
 const router = express_1.default.Router();
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
@@ -29,6 +30,6 @@ const storage = multer_1.default.diskStorage({
     },
 });
 const upload = (0, multer_1.default)({ storage, dest: "app/public/uploads" });
-router.route("/").post(authService_1.auth, upload.single("image"), filesService_1.uploadFile);
-router.route("/:fileId").delete(authService_1.auth, filesService_1.deleteFile);
+router.route("/").post(authService_1.auth, checkDemo_1.checkDemo, upload.single("image"), filesService_1.uploadFile);
+router.route("/:fileId").delete(authService_1.auth, checkDemo_1.checkDemo, filesService_1.deleteFile);
 exports.filesRouter = router;
