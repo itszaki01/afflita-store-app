@@ -21,7 +21,7 @@ const orderSchema = new mongoose_1.default.Schema({
     shippingType: { type: String, enum: ["للمنزل", "للمكتب", "مجاني"], required: true },
     productFees: { type: Number },
     productShortName: { type: String, required: true },
-    porductCategory: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Category' },
+    porductCategory: String,
     productId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Product' },
     orderUID: { type: String, required: true },
     note: String,
