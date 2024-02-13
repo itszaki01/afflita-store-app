@@ -86,7 +86,7 @@ exports.homeView = (0, express_async_handler_1.default)(async (req, res) => {
                     s.parentNode.insertBefore(t, s);
                 })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
             </script>
-            <script type="module" crossorigin src="/assets/index-htpQ5DrV.js"></script>
+            <script type="module" crossorigin src="/assets/index-AUHa6rKk.js"></script>
             <link rel="stylesheet" crossorigin href="/assets/index-_EVpBAq8.css">
         </head>
         <body>

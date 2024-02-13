@@ -6,6 +6,7 @@ const categoriesRoute_1 = require("./categoriesRoute");
 const conversioinApiRoutes_1 = require("./conversioinApiRoutes");
 const filesRoute_1 = require("./filesRoute");
 const locationsRoute_1 = require("./locationsRoute");
+const ordersRoute_1 = require("./ordersRoute");
 const productsRoute_1 = require("./productsRoute");
 const storePagesRoute_1 = require("./storePagesRoute");
 const storeSettingsRoute_1 = require("./storeSettingsRoute");
@@ -19,6 +20,7 @@ const mountedRoutes = (app) => {
     app.use("/auth", authRoute_1.authRouter);
     app.use("/locations", locationsRoute_1.locationsRouter);
     app.use("/conv-api", conversioinApiRoutes_1.conversionApiRoutes);
+    app.use("/orders", ordersRoute_1.ordersRouter);
     app.use("/", viewsRoute_1.viewsRouter);
 };
 exports.mountedRoutes = mountedRoutes;
