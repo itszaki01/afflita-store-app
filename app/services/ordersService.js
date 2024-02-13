@@ -25,19 +25,27 @@ exports.getAllOrders = (0, express_async_handler_1.default)(async (req, res) => 
         }
         else {
             const documents = await apiFeatures.mongooseQuery.where("orderStatus").eq(req.query.orderStatus);
+            const regex = /"(\w+:\/\/)[^\/]+(\/uploads\/image-[^\s"]+)"/g;
+            const jsonString = JSON.stringify(documents);
+            const replacedJsonString = jsonString.replace(regex, `"${process.env.ORIGINAL_BASE_URL}$2"`);
+            const replacedJson = JSON.parse(replacedJsonString);
             res.json({
                 results: documents.length,
                 ...apiFeatures.paginateResults,
-                data: documents,
+                data: replacedJson,
             });
         }
     }
     else {
         const documents = await apiFeatures.mongooseQuery.where("orderStatus").ne("متروك");
+        const regex = /"(\w+:\/\/)[^\/]+(\/uploads\/image-[^\s"]+)"/g;
+        const jsonString = JSON.stringify(documents);
+        const replacedJsonString = jsonString.replace(regex, `"${process.env.ORIGINAL_BASE_URL}$2"`);
+        const replacedJson = JSON.parse(replacedJsonString);
         res.json({
             results: documents.length,
             ...apiFeatures.paginateResults,
-            data: documents,
+            data: replacedJson,
         });
     }
 });
