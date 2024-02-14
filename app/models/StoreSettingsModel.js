@@ -88,6 +88,8 @@ const storeSettingsSchema = new mongoose_1.default.Schema({
         agencyContactInsta: {
             type: String,
         },
+        agencyExplainYt: String,
+        agencyMainContact: String
     },
     allowCities: Boolean,
     isDemo: Boolean,
