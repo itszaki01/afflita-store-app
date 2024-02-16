@@ -16,7 +16,8 @@ const googleSheetsPost = async (googleSheetKey, _data, properties) => {
     const orderData = {
         ...data,
         properties: JSON.stringify(properties).replace(/","/g, "] / [").replace(/\["/g, "[").replace(/"\]/g, "]"),
-        orderDate: `${formattedDateTime.replace(",", " -")}`
+        orderDate: `${formattedDateTime.replace(",", " -")}`,
+        orderStatus: data.orderStatus === 'متروك' ? '⚠️ متروك' : data.orderStatus
     };
     const formData = new form_data_1.default();
     for (const key in orderData) {

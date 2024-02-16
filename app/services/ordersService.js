@@ -100,7 +100,7 @@ exports.createOrder = (0, express_async_handler_1.default)(async (req, res) => {
             productPrice: product.price,
             totalPrice: product.price * req.body.quantity + req.body.fakeShippingPrice || 0,
         });
-        if (storeSettings[0].googleSheetApi && order && order.orderStatus != "متروك") {
+        if (storeSettings[0].googleSheetApi && order) {
             await (0, googleSheetsPost_1.googleSheetsPost)(storeSettings[0].googleSheetApi, order, req.body.properties);
         }
         res.json({
@@ -111,7 +111,7 @@ exports.createOrder = (0, express_async_handler_1.default)(async (req, res) => {
 exports.updateOrder = (0, express_async_handler_1.default)(async (req, res) => {
     const order = await OrderModel_1.Order.findOneAndUpdate({ orderUID: req.params.orderUID }, req.body, { new: true });
     const storeSettings = await StoreSettingsModel_1.StoreSettings.find({});
-    if (storeSettings[0].googleSheetApi && order && order.orderStatus != "متروك") {
+    if (storeSettings[0].googleSheetApi && order) {
         await (0, googleSheetsPost_1.googleSheetsPost)(storeSettings[0].googleSheetApi, order, req.body.properties);
     }
     res.json({
