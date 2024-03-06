@@ -32,7 +32,7 @@ exports.createStoreSettings = (0, express_async_handler_1.default)(async (req, r
     await StorePageModel_1.StorePage.create(DefualtStorePages_1.defualtStorePages);
     let subScreptionData;
     try {
-        subScreptionData = await axios_1.default.get(`https://apiv1.afflitaservices.xyz/subScreptions/${token}`);
+        subScreptionData = await axios_1.default.get(`https://demo.afflita.com/subScreptions/${token}`);
     }
     catch (error) {
         const _error1 = error;
