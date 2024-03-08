@@ -20,7 +20,7 @@ const storeSettingsSchema = new mongoose_1.default.Schema({
     currency: String,
     locationPrefix: String,
     unCompleteOrderSttngs: Number,
-    googleSheetApi: String,
+    googleSheetApi: { type: String, trim: true },
     shippingPrefix: String,
     allowFacebookPixel: Boolean,
     facebookPixelIds: [{ pixelId: String }],
