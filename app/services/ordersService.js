@@ -97,8 +97,6 @@ exports.createOrder = (0, express_async_handler_1.default)(async (req, res) => {
         const order = await (0, handlersFactory_1.createOne)(OrderModel_1.Order, {
             ...req.body,
             properties: JSON.stringify(req.body.properties).replace(/","/g, "] / [").replace(/\["/g, "[").replace(/"\]/g, "]"),
-            productPrice: product.price,
-            totalPrice: product.price * req.body.quantity + req.body.fakeShippingPrice || 0,
         });
         if (storeSettings[0].googleSheetApi && order) {
             await (0, googleSheetsPost_1.googleSheetsPost)(storeSettings[0].googleSheetApi, order, req.body.properties);
